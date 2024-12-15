@@ -1,3 +1,5 @@
+package io.hvk.koreanculturecenterapp.repository
+
 import io.hvk.koreanculturecenterapp.model.News
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -1,31 +1,31 @@
 package io.hvk.koreanculturecenterapp.viewmodel
 
-import io.hvk.koreanculturecenterapp.repository.NewsRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.hvk.koreanculturecenterapp.model.News
+import io.hvk.koreanculturecenterapp.model.Event
+import io.hvk.koreanculturecenterapp.repository.EventsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class NewsViewModel : ViewModel() {
-    private val repository = NewsRepository()
-    
-    private val _newsItems = MutableStateFlow<List<News>>(emptyList())
-    val newsItems: StateFlow<List<News>> = _newsItems.asStateFlow()
-    
+class EventsViewModel : ViewModel() {
+    private val repository = EventsRepository()
+
+    private val _events = MutableStateFlow<List<Event>>(emptyList())
+    val events: StateFlow<List<Event>> = _events.asStateFlow()
+
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
-    
+
     init {
         loadNews()
     }
-    
+
     private fun loadNews() {
         viewModelScope.launch {
             _isLoading.value = true
-            _newsItems.value = repository.getNews()
+            _events.value = repository.getEvents()
             _isLoading.value = false
         }
     }

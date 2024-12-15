@@ -11,7 +11,7 @@ enum class NavigationItem(
     val icon: ImageVector,
     val route: String
 ) {
-    EVENTS("Ana Sayfa", Icons.Default.Home, "home"),
-    NEWS("Haberler", Icons.Default.List, "news"),
-    PRESS("Hakkında", Icons.Default.Info, "about")
-} 
+    NEWS("Duyurular", Icons.Default.List, "news"),
+    EVENTS("Etkinlikler", Icons.Default.Info, "about"),
+    PRESS("Haberler", Icons.Default.Home, "home")
+}
