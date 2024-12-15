@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun AboutScreen(
+fun EventScreen(
     modifier: Modifier = Modifier,
     viewModel: EventsViewModel = viewModel()
 ) {
