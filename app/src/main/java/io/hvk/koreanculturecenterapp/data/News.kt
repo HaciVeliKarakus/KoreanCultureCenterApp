@@ -5,8 +5,8 @@ data class News(
     val date: String,
     val link: String,
     val type: String,
-    val visitCount:String
+    val visitCount: String
 ) {
-    val isHot:Boolean
+    val isHot: Boolean
         get() = type == "hot"
 }

@@ -14,12 +14,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import io.hvk.koreanculturecenterapp.data.Press
 
 @Composable
 fun PressScreen(
-    modifier: Modifier,
-    viewModel: PressViewModel = viewModel()
+    modifier: Modifier = Modifier,
+    viewModel: PressViewModel = viewModel(),
+    onClick: (String) -> Unit
+
 ) {
     val news by viewModel.items.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -35,8 +36,10 @@ fun PressScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(news) { newsItem ->
-                    PressCard(newsItem)
+                items(news) { item ->
+                    PressCard(item){
+                        onClick(item.link)
+                    }
                 }
             }
         }

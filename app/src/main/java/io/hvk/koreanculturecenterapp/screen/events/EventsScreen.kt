@@ -18,7 +18,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun EventScreen(
     modifier: Modifier = Modifier,
-    viewModel: EventsViewModel = viewModel()
+    viewModel: EventsViewModel = viewModel(),
+    onClick: (String) -> Unit
 ) {
     val news by viewModel.events.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -34,8 +35,10 @@ fun EventScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(news) { newsItem ->
-                    EventCard(newsItem)
+                items(news) { item ->
+                    EventCard(item) {
+                        onClick(item.link)
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 package io.hvk.koreanculturecenterapp.screen.news
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,19 +19,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.hvk.koreanculturecenterapp.data.News
+import io.hvk.koreanculturecenterapp.ui.theme.blue
+import io.hvk.koreanculturecenterapp.ui.theme.red
 
 @Composable
-fun NewsCard(item: News) {
+fun NewsCard(
+    item: News,
+    onClick: () -> Unit
+) {
     Card(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(
             containerColor = if (item.isHot)
                 MaterialTheme.colorScheme.errorContainer
             else
                 MaterialTheme.colorScheme.surface
         ),
-        elevation = CardDefaults.cardElevation(4.dp),
+        elevation = CardDefaults.cardElevation(2.dp),
     ) {
         Box(
             modifier = Modifier
@@ -42,6 +49,7 @@ fun NewsCard(item: News) {
                 Text(
                     text = item.title,
                     style = MaterialTheme.typography.titleMedium,
+                    color = blue
                 )
                 Text(
                     text = "Ziyaretçi sayısı: ${item.visitCount}",
@@ -51,7 +59,8 @@ fun NewsCard(item: News) {
             Text(
                 text = item.date,
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.align(Alignment.BottomEnd)
+                modifier = Modifier.align(Alignment.BottomEnd),
+                color = red
             )
 
         }
@@ -84,7 +93,7 @@ private fun Preview() {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(news) { newsItem ->
-            NewsCard(newsItem)
+            NewsCard(newsItem){}
         }
     }
 }

@@ -1,5 +1,6 @@
 package io.hvk.koreanculturecenterapp.screen.events
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,11 +24,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.hvk.koreanculturecenterapp.components.AsyncImage
 import io.hvk.koreanculturecenterapp.data.Event
+import io.hvk.koreanculturecenterapp.ui.theme.blue
 
 @Composable
-fun EventCard(item: Event) {
+fun EventCard(
+    item: Event,
+    onClick: () -> Unit
+) {
 
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.clickable(onClick = onClick)
+    ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -42,7 +50,8 @@ fun EventCard(item: Event) {
                     AsyncImage(url = item.image)
                     Text(
                         item.title,
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
+                        color = blue
                     )
                     Text(
                         item.info,
@@ -103,7 +112,7 @@ private fun Preview() {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(events) { newsItem ->
-            EventCard(newsItem)
+            EventCard(newsItem){}
         }
     }
 }

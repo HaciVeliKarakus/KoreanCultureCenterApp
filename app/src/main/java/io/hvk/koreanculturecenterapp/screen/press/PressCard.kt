@@ -18,9 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.hvk.koreanculturecenterapp.data.Press
+import io.hvk.koreanculturecenterapp.ui.theme.blue
 
 @Composable
-fun PressCard(item: Press) {
+fun PressCard(
+    item: Press,
+    onClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -36,6 +40,7 @@ fun PressCard(item: Press) {
                 Text(
                     text = item.title,
                     style = MaterialTheme.typography.titleMedium,
+                    color = blue
                 )
                 Text(
                     text = "Ziyaretçi sayısı: ${item.visitCount}",
@@ -78,7 +83,9 @@ private fun Preview() {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(items) { item ->
-            PressCard(item)
+            PressCard(item) {
+
+            }
         }
     }
 }

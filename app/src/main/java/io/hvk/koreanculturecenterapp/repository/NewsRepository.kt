@@ -18,11 +18,16 @@ class NewsRepository {
                 val dateElement = element.select("td:nth-child(3)")
                 val visitCount = element.select("td:nth-child(4)")
 
+                val link = buildString {
+                    append(baseUrl)
+                    append("read/")
+                    append(titleElement.attr("seq"))
+                }
 
                 News(
                     title = titleElement.text(),
                     date = dateElement.text(),
-                    link = baseUrl + "read/" + titleElement.attr("seq"),
+                    link = link,
                     type = element.className(),
                     visitCount = visitCount.text()
                 )
