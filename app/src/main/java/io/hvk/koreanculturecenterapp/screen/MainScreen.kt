@@ -22,7 +22,7 @@ import io.hvk.koreanculturecenterapp.screen.press.PressScreen
 
 @Composable
 fun MainScreen() {
-    var selectedTab by remember { mutableStateOf(NavigationItem.EVENTS) }
+    var selectedTab by remember { mutableStateOf(NavigationItem.PRESS) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -35,7 +35,7 @@ fun MainScreen() {
                         selected = selectedTab == item,
                         onClick = { selectedTab = item },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = MaterialTheme.colorScheme.primary
+                            selectedIconColor = MaterialTheme.colorScheme.onPrimary
                         )
                     )
                 }
