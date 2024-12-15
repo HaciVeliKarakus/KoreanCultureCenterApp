@@ -15,14 +15,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import io.hvk.koreanculturecenterapp.navigation.NavigationItem
 import io.hvk.koreanculturecenterapp.screen.events.AboutScreen
 import io.hvk.koreanculturecenterapp.screen.news.NewsScreen
 import io.hvk.koreanculturecenterapp.screen.press.PressScreen
+import io.hvk.koreanculturecenterapp.ui.theme.KoreanCultureCenterAppTheme
 
 @Composable
 fun MainScreen() {
-    var selectedTab by remember { mutableStateOf(NavigationItem.PRESS) }
+    var selectedTab by remember { mutableStateOf(NavigationItem.NEWS) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -35,7 +38,8 @@ fun MainScreen() {
                         selected = selectedTab == item,
                         onClick = { selectedTab = item },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = MaterialTheme.colorScheme.onPrimary
+                            selectedIconColor = MaterialTheme.colorScheme.secondary,
+                            selectedTextColor = MaterialTheme.colorScheme.secondary
                         )
                     )
                 }
@@ -47,5 +51,14 @@ fun MainScreen() {
             NavigationItem.PRESS -> PressScreen(modifier = Modifier.padding(innerPadding))
             NavigationItem.EVENTS -> AboutScreen(modifier = Modifier.padding(innerPadding))
         }
+    }
+}
+
+
+@PreviewLightDark
+@Composable
+private fun Preview() {
+    KoreanCultureCenterAppTheme {
+        MainScreen()
     }
 }
