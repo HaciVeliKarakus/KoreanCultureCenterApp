@@ -1,7 +1,7 @@
 package io.hvk.koreanculturecenterapp.repository
 
-import io.hvk.koreanculturecenterapp.MAIN_URL
-import io.hvk.koreanculturecenterapp.model.Event
+import io.hvk.koreanculturecenterapp.data.MAIN_URL
+import io.hvk.koreanculturecenterapp.data.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup

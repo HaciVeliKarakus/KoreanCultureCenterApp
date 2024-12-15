@@ -1,6 +1,6 @@
 package io.hvk.koreanculturecenterapp.repository
 
-import io.hvk.koreanculturecenterapp.model.News
+import io.hvk.koreanculturecenterapp.data.News
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup

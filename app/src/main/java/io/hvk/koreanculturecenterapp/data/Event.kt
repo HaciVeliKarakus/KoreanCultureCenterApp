@@ -1,4 +1,4 @@
-package io.hvk.koreanculturecenterapp.model
+package io.hvk.koreanculturecenterapp.data
 
 data class Event(
     val title: String,

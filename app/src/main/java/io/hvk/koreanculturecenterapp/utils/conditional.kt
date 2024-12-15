@@ -1,4 +1,4 @@
-package io.hvk.koreanculturecenterapp
+package io.hvk.koreanculturecenterapp.utils
 
 import androidx.compose.ui.Modifier
 

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
@@ -19,7 +18,7 @@ import androidx.compose.ui.Modifier
 import io.hvk.koreanculturecenterapp.navigation.NavigationItem
 import io.hvk.koreanculturecenterapp.screen.events.AboutScreen
 import io.hvk.koreanculturecenterapp.screen.news.NewsScreen
-import io.hvk.koreanculturecenterapp.screen.press.HomeScreen
+import io.hvk.koreanculturecenterapp.screen.press.PressScreen
 
 @Composable
 fun MainScreen() {
@@ -45,7 +44,7 @@ fun MainScreen() {
     ) { innerPadding ->
         when (selectedTab) {
             NavigationItem.NEWS -> NewsScreen(modifier = Modifier.padding(innerPadding))
-            NavigationItem.PRESS -> HomeScreen(modifier = Modifier.padding(innerPadding))
+            NavigationItem.PRESS -> PressScreen(modifier = Modifier.padding(innerPadding))
             NavigationItem.EVENTS -> AboutScreen(modifier = Modifier.padding(innerPadding))
         }
     }

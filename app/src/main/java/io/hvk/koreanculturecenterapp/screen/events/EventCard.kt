@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.hvk.koreanculturecenterapp.components.AsyncImage
-import io.hvk.koreanculturecenterapp.model.Event
+import io.hvk.koreanculturecenterapp.data.Event
 
 @Composable
 fun EventCard(item: Event) {
