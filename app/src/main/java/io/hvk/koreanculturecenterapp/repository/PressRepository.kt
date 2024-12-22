@@ -23,8 +23,6 @@ class PressRepository {
                     append("read/")
                     append(title.select("a").attr("seq"))
                 }
-                println("_____$visitCount")
-//
                 Press(
                     title = title.text(),
                     date = postDate.text(),

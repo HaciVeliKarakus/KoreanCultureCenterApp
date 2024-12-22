@@ -12,16 +12,14 @@ class DetailsRepository {
         link: String
     ): Detail = withContext(Dispatchers.IO) {
         try {
-//            val baseUrl = "https://tr.korean-culture.org/tr/362/board/215/"
             val doc: Document = Jsoup.connect(link).get()
 
             val newsElements = doc.select("div.view-content")
             val titleElement = newsElements.select("header h2")
-            val text = newsElements.select("div.txt")
+            val text = newsElements.select("div.se-contents")
+            val downloadable = newsElements.select("dl.attach-file")
             val tmpList: MutableList<SubDetail> = mutableListOf()
-            println("______${text.html()}")
             text.map { element ->
-                println("____${element.html()}")
                 tmpList.add(
                     SubDetail(
                         text = element.html()
@@ -30,7 +28,8 @@ class DetailsRepository {
             }
             Detail(
                 header = titleElement.text(),
-                list = tmpList
+                list = tmpList,
+                downloadable = downloadable.html()
             )
         } catch (e: Exception) {
             e.printStackTrace()

@@ -22,8 +22,9 @@ import io.hvk.koreanculturecenterapp.ui.theme.KoreanCultureCenterAppTheme
 fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
+
     val shouldShowBottomBar = when (navBackStackEntry?.destination?.route) {
-        "detail_screen?link={link}" -> false  // Hide bottom bar during quiz
+        "detail_screen?link={link}" -> false
         else -> true
     }
 

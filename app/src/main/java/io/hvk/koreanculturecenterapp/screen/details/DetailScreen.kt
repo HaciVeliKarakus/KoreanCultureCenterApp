@@ -11,9 +11,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,7 +30,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.fromHtml
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -38,6 +37,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import io.hvk.koreanculturecenterapp.components.AsyncImage
 import io.hvk.koreanculturecenterapp.data.MAIN_URL
 import io.hvk.koreanculturecenterapp.ui.theme.blue
+import io.hvk.koreanculturecenterapp.ui.theme.red
 import org.jsoup.Jsoup
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,20 +67,19 @@ fun DetailScreen(
                             color = blue,
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
-                            textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth(),
                             style = MaterialTheme.typography.titleLarge
                         )
                     }
                 },
                 navigationIcon = {
-                   AnimatedVisibility(news.header.isNullOrBlank().not()) {
-                       IconButton(
-                           onClick = onBackClick
-                       ) {
-                           Icon(Icons.AutoMirrored.Filled.ArrowBack,"")
-                       }
-                   }
+                    AnimatedVisibility(news.header.isNullOrBlank().not()) {
+                        IconButton(
+                            onClick = onBackClick
+                        ) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, "")
+                        }
+                    }
                 }
             )
         }
@@ -102,27 +101,38 @@ fun DetailScreen(
                 ) {
                     items(news.list) { item ->
                         item.text?.let {
-                            Text(
-                                text = AnnotatedString.fromHtml(
-                                    htmlString = it,
-                                    linkStyles = TextLinkStyles(
-                                        style = SpanStyle(
-                                            textDecoration = TextDecoration.Underline,
-                                            color = MaterialTheme.colorScheme.primary
-                                        )
-                                    )
-                                ),
-                                modifier = Modifier.padding(vertical = 8.dp)
-                            )
+                            HtmlText(it)
                             it.extractImageUrls().forEach { url ->
                                 AsyncImage(url)
                             }
+                        }
+                    }
+                    item {
+                        HorizontalDivider()
+                        news.downloadable?.let {
+                            HtmlText(it)
                         }
                     }
                 }
             }
         }
     }
+}
+
+@Composable
+private fun HtmlText(it: String) {
+    Text(
+        text = AnnotatedString.fromHtml(
+            htmlString = it,
+            linkStyles = TextLinkStyles(
+                style = SpanStyle(
+                    textDecoration = TextDecoration.Underline,
+                    color = red
+                )
+            )
+        ),
+        modifier = Modifier.padding(vertical = 8.dp)
+    )
 }
 
 fun String.extractImageUrls(): List<String> {
