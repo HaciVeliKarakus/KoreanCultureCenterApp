@@ -1,9 +1,11 @@
 package io.hvk.koreanculturecenterapp.navigation
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -16,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import io.hvk.koreanculturecenterapp.ui.theme.red
-import io.hvk.koreanculturecenterapp.ui.theme.white
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
@@ -31,10 +32,11 @@ fun BottomNavigationBar(navController: NavHostController) {
     val currentRoute = navBackStackEntry?.destination?.route
 
     NavigationBar(
-        containerColor = white,
+        containerColor = MaterialTheme.colorScheme.surface,
         modifier = Modifier
+            .navigationBarsPadding()
             .padding(4.dp)
-            .border(1.dp, red, RoundedCornerShape(16.dp))
+            .border(1.dp, red.copy(0.5f), RoundedCornerShape(16.dp))
 
     ) {
         items.forEach { item ->
