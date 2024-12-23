@@ -23,9 +23,9 @@ import io.hvk.koreanculturecenterapp.ui.theme.red
 fun BottomNavigationBar(navController: NavHostController) {
 
     val items = listOf(
-        NavigationItem.news,
-        NavigationItem.event,
-        NavigationItem.press
+        NavigationItem.News,
+        NavigationItem.Event,
+        NavigationItem.Press
     )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()

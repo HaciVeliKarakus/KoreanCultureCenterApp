@@ -13,22 +13,22 @@ import io.hvk.koreanculturecenterapp.screen.press.PressScreen
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController, startDestination = NavigationItem.news.route) {
-        composable(NavigationItem.news.route) {
+    NavHost(navController, startDestination = NavigationItem.News.route) {
+        composable(NavigationItem.News.route) {
             NewsScreen(
                 onClick = { link ->
                     navController.navigate("detail_screen?link=$link")
                 }
             )
         }
-        composable(NavigationItem.event.route) {
+        composable(NavigationItem.Event.route) {
             EventScreen(
                 onClick = { link ->
                     navController.navigate("detail_screen?link=$link")
                 }
             )
         }
-        composable(NavigationItem.press.route) {
+        composable(NavigationItem.Press.route) {
             PressScreen(
                 onClick = { link ->
                     navController.navigate("detail_screen?link=$link")
