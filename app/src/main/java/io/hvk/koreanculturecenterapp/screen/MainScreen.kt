@@ -1,5 +1,7 @@
 package io.hvk.koreanculturecenterapp.screen
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -31,7 +33,7 @@ fun MainScreen() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            if (shouldShowBottomBar) {
+            AnimatedVisibility(shouldShowBottomBar) {
                 BottomNavigationBar(navController)
             }
         }

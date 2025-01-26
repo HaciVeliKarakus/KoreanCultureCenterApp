@@ -35,28 +35,7 @@ fun NavigationGraph(navController: NavHostController) {
                 }
             )
         }
-//        composable(NavigationItem.Lessons.route) {
-//            val viewModel: MainViewModel = koinViewModel()
-//            val lessons by viewModel.lessons.observeAsState(emptyList())
-//            LessonsScreen(
-//                lessons = lessons,
-//                onSelect = { lessonNumber ->
-//                    navController.navigate("lesson_detail/$lessonNumber") {
-//                        launchSingleTop = true
-//                    }
-//                }
-//            )
-//        }
-//        composable(NavigationItem.Quiz.route) {
-//            QuizScreen(
-//                onStartQuiz = { quizId ->
-//                    navController.navigate("quiz_detail/$quizId")
-//                }
-//            )
-//        }
-//        composable(NavigationItem.Profile.route) {
-//            ProfileScreen()
-//        }
+
         composable(
             route = "detail_screen?link={link}",
             arguments = listOf(

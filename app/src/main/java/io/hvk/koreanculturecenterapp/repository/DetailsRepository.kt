@@ -28,7 +28,8 @@ class DetailsRepository {
             }
             Detail(
                 header = titleElement.text(),
-                list = tmpList,
+                textList = tmpList,
+                imgList = listOf(),
                 downloadable = downloadable.html()
             )
         } catch (e: Exception) {

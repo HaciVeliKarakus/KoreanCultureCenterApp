@@ -26,9 +26,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
@@ -39,6 +41,7 @@ import io.hvk.koreanculturecenterapp.data.MAIN_URL
 import io.hvk.koreanculturecenterapp.ui.theme.blue
 import io.hvk.koreanculturecenterapp.ui.theme.red
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -99,7 +102,7 @@ fun DetailScreen(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    items(news.list) { item ->
+                    items(news.textList) { item ->
                         item.text?.let {
                             HtmlText(it)
                             it.extractImageUrls().forEach { url ->
@@ -108,8 +111,8 @@ fun DetailScreen(
                         }
                     }
                     item {
-                        HorizontalDivider()
                         news.downloadable?.let {
+                            HorizontalDivider()
                             HtmlText(it)
                         }
                     }
@@ -122,15 +125,17 @@ fun DetailScreen(
 @Composable
 private fun HtmlText(it: String) {
     Text(
-        text = AnnotatedString.fromHtml(
-            htmlString = it,
-            linkStyles = TextLinkStyles(
-                style = SpanStyle(
-                    textDecoration = TextDecoration.Underline,
-                    color = red
-                )
-            )
-        ),
+        text = fromHtmlWithStyle(it)
+//            .fromHtml(
+//            htmlString = it,
+//            linkStyles = TextLinkStyles(
+//                style = SpanStyle(
+//                    textDecoration = TextDecoration.Underline,
+//                    color = red
+//                )
+//            )
+//        )
+        ,
         modifier = Modifier.padding(vertical = 8.dp)
     )
 }
@@ -138,4 +143,93 @@ private fun HtmlText(it: String) {
 fun String.extractImageUrls(): List<String> {
     val document = Jsoup.parse(this)
     return document.select("img[src]").map { MAIN_URL + it.attr("src") }
+}
+
+fun String.extractText(): String {
+    val document = Jsoup.parse(this)
+    document.select("img").remove()
+    return document.html()
+}
+
+private fun parseColor(value: String): Color {
+    return try {
+        Color(android.graphics.Color.parseColor(value))
+    } catch (e: IllegalArgumentException) {
+        Color.Unspecified
+    }
+}
+
+fun fromHtmlWithStyle(html: String): AnnotatedString {
+    val parsedHtml = Jsoup.parse(html)
+    val builder = AnnotatedString.Builder()
+
+    // Body içeriğini işleyelim
+    parsedHtml.children().forEach { element ->
+        processElementWithStyle(element, builder)
+    }
+
+    return builder.toAnnotatedString()
+}
+
+private fun processElementWithStyle(element: Element, builder: AnnotatedString.Builder) {
+    when (element.tagName()) {
+        "b", "strong" -> {
+            builder.pushStyle(SpanStyle(fontWeight = FontWeight.Bold))
+            builder.append(element.text())
+            builder.pop()
+        }
+        "i", "em" -> {
+            builder.pushStyle(SpanStyle(fontStyle = androidx.compose.ui.text.font.FontStyle.Italic))
+            builder.append(element.text())
+            builder.pop()
+        }
+        "u" -> {
+            builder.pushStyle(SpanStyle(textDecoration = TextDecoration.Underline))
+            builder.append(element.text())
+            builder.pop()
+        }
+        "span" -> {
+            // Span style işleme
+            val style = element.attr("style")
+            val spanStyle = parseStyle(style)
+            builder.pushStyle(spanStyle)
+            builder.append(element.text())
+            builder.pop()
+        }
+        else -> {
+            builder.append(element.text()) // Varsayılan metin
+        }
+    }
+
+    // Alt elementleri işlemek için recursive çağrı
+    element.children().forEach { child ->
+        processElementWithStyle(child, builder)
+    }
+}
+
+// HTML style string'i SpanStyle'a çevirme
+private fun parseStyle(style: String): SpanStyle {
+    var spanStyle = SpanStyle()
+
+    style.split(";").forEach { rule ->
+        println("_______________$rule")
+        val (property, value) = rule.split(":").map { it.trim() }
+        when (property) {
+            "color" -> {
+                spanStyle = spanStyle.copy(color = parseColor(value))
+            }
+            "font-weight" -> {
+                if (value == "bold") {
+                    spanStyle = spanStyle.copy(fontWeight = FontWeight.Bold)
+                }
+            }
+            "text-decoration" -> {
+                if (value == "underline") {
+                    spanStyle = spanStyle.copy(textDecoration = TextDecoration.Underline)
+                }
+            }
+        }
+    }
+
+    return spanStyle
 }
