@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "io.hvk.koreanculturecenterapp"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "io.hvk.koreanculturecenterapp"
